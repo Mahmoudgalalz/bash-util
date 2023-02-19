@@ -1,11 +1,24 @@
-
+# short command for back to desktop from everywher
 alias ds='cd ~ && cd Desktop'
+# Delete the directory if it has childrens (files)
 alias ex='rm -vrf'
-alias sp='~/Desktop/test/sp.sh'
+# signed commit to git
 alias gc='git commit -S -m'
+# push 
 alias voo='git push'
+# Adding all files to stage
 alias ga='git add -A'
-#making linux GRUB defualt
+
+alias open='xdg-open .'
+
+# short cut for push and commit example (gp "init commit")
+gp(){
+    commit=$1
+    ga
+    gc commit
+    voo
+}
+#remove all old snap versions auto
 rmoldsnap(){
 set -eu
 snap list --all | awk '/disabled/{print $1, $3}' |
@@ -14,22 +27,19 @@ snap list --all | awk '/disabled/{print $1, $3}' |
     done
 }
 
+
+# create dir and head to it
 mdir(){
 	mkdir $1
 	cd $1
 }
+# not important !!
 gitKey(){
 	xclip -sel clip < ~/.github_TOKEN
 	echo "Hi,KroKing"
        	echo "The GitHub Token has been saved in your Clipboard"
 }
-alias open='xdg-open .'
-goWindows(){
-	echo "Switching to Windows"
-	sudo cp -f /etc/default/grub.windows /etc/default/grub
-	sudo update-grub
-	reboot
-}
+# list the files and select by moving with arrows (required to have gum installed)
 ld(){
 	dir=$(ls -A $1 | gum filter)
 	if [[ -z $1 ]]
@@ -38,6 +48,12 @@ ld(){
 else cd "$1/$dir";
 	fi
 }
+
+# you can change this function name
+# I used it to create project dir in the projects directory in home and open VSCode
+# you can delete using (kro rm)
+# you can go to specific file in projects dir using (kro ls) and it using Gum so you have to install it too
+ 
 kro(){
 	projectName=$1
 	if [[ "$1" == "ls" ]]
@@ -62,6 +78,5 @@ kro(){
 	fi
 fi
 }
-# This env for JuniorJobs Project
-export DATABASE_URL='prisma://aws-eu-central-1.prisma-data.com/?api_key=1ZfEXhBqRQ6bV0titoM9OPNeqdb2mv6rMqtfLryxjgDqKQOXplPxei1r3hXEFVVf'
+
 
