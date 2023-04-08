@@ -53,30 +53,34 @@ else cd "$1/$dir";
 # I used it to create project dir in the projects directory in home and open VSCode
 # you can delete using (kro rm)
 # you can go to specific file in projects dir using (kro ls) and it using Gum so you have to install it too
- 
-kro(){
-	projectName=$1
-	if [[ "$1" == "ls" ]]
-	then ld ~/projects
-	elif [[ "$1" == "rm" ]]
-	then
-		if [[ ! -z $2 ]]
-		then 
-			ex ~/projects/$2 > /dev/null 2>&1
-			echo "$2 has been deleted"
-		fi
-	else
-	if [[ -d ~/projects/$projectName ]]
-	then 
-		echo "$projectName is exist in the project directory!"
-	else
-		echo "Creating the $projectName in the project Dir..."
-		
-		mkdir ~/projects/$projectName && cd ~/projects/$1
-		code ~/projects/$projectName
-		echo "Opening VScode witin the dir.., have fun KroKing"
-	fi
+prj(){
+        projectName=$1
+        if [[ "$1" == "ls" ]]
+        then ld ~/projects
+        elif [[ "$1" == "clone" ]]
+        then
+                cd ~/projects
+                git clone $2
+                name=$( echo $2 | cut -d/ -f5-)
+                cd $name
+                code .
+        elif [[ "$1" == "rm" ]]
+        then
+                if [[ ! -z $2 ]]
+                then
+                        ex ~/projects/$2 > /dev/null 2>&1
+                        echo "$2 has been deleted"
+                fi
+        else
+        if [[ -d ~/projects/$projectName ]]
+        then
+                echo "$projectName is exist in the project directory!"
+        else
+                echo "Creating the $projectName in the project Dir..."
+
+                mkdir ~/projects/$projectName && cd ~/projects/$1
+                code ~/projects/$projectName
+                echo "Opening VScode witin the dir.., have fun KroKing"
+        fi
 fi
 }
-
-
